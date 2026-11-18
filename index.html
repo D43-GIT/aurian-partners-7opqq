@@ -253,11 +253,24 @@ h3.group + .sub{margin-top:4px;color:var(--small);font-size:18px}
 .out .num small{font:500 19px "Inter Tight",sans-serif;color:var(--bone2);margin-left:6px;letter-spacing:0}
 .out .say{font-size:18px;color:var(--bone)}
 .out .fine{font-size:16px;color:var(--bone2)}
-.bars{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;align-items:end;height:150px;margin-top:6px}
-.bars i{display:block;height:calc(var(--h,0) * 100%);min-height:4px;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,var(--gold2),var(--goldhover));transition:height 1100ms var(--ease),opacity 900ms var(--ease);transition-delay:calc(var(--n,0) * 70ms)}
-.bars i.zero{opacity:.18}
-.js .calc.rv:not(.in) .bars i{height:0}
-.barlab{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;text-align:center;font-size:16px;color:var(--bone2)}
+/* earnings graph (19 Nov): running total over 12 months, 1 new client a month, 1 client dashed */
+.gk{font-size:17px;color:var(--bone2);margin-top:8px;padding-top:14px;border-top:1px solid #34312A}
+.gbig{font-size:18px;color:var(--bone)}
+.gbig b{font:600 28px/1.1 "Inter Tight",sans-serif;color:var(--gold2);font-variant-numeric:tabular-nums;margin-right:4px}
+.chart{position:relative;height:180px;margin-top:6px}
+.chart svg{display:block;width:100%;height:100%;clip-path:inset(0 0 0 0);transition:clip-path 1600ms var(--ease)}
+.js .calc.rv:not(.in) .chart svg,.chart.redraw svg{clip-path:inset(0 100% 0 0);transition:none}
+.chart .gl{fill:none;stroke:#34312A;stroke-width:1;vector-effect:non-scaling-stroke}
+.chart .gb{fill:none;stroke:#5a5448;stroke-width:1.5;vector-effect:non-scaling-stroke}
+.chart .ga{fill:url(#gfill);stroke:none}
+.chart .gm{fill:none;stroke:var(--gold2);stroke-width:3;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.chart .g1{fill:none;stroke:var(--bone2);stroke-width:2;stroke-dasharray:6 6;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.gdot{position:absolute;left:98.333%;top:8%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--gold2);box-shadow:0 0 0 5px rgba(232,200,112,.2),0 0 20px rgba(232,200,112,.65);transition:opacity 1000ms var(--ease) 1200ms}
+.js .calc.rv:not(.in) .gdot,.chart.redraw .gdot{opacity:0;transition:none}
+.rm .chart svg,.rm .gdot{transition:none}
+.gx{display:flex;justify-content:space-between;font-size:16px;color:var(--bone2);margin-top:6px}
+.legend .sw{width:24px;height:0;border-radius:0;background:none;border-top:3px solid var(--gold2)}
+.legend .sw.d{border-top:2px dashed var(--bone2)}
 .viz[hidden]{display:none}
 .splitbar{display:flex;height:58px;border-radius:14px;overflow:hidden;margin-top:6px;background:var(--gold2)}
 .splitbar .us{width:calc(var(--u,.7) * 100%);background:#4a463c;transition:width 1100ms var(--ease)}
@@ -489,9 +502,19 @@ footer .who{font-size:18px;color:var(--ink)}
         <div class="num"><span id="big">A$1,411</span><small id="unit"></small></div>
         <p class="say" id="say">A$470 first month, then A$157 a month for 6 months</p>
         <div class="viz" id="vref">
-          <div class="bars" aria-hidden="true"><i style="--n:0;--h:1"></i><i style="--n:1;--h:0.3333"></i><i style="--n:2;--h:0.3333"></i><i style="--n:3;--h:0.3333"></i><i style="--n:4;--h:0.3333"></i><i style="--n:5;--h:0.3333"></i><i style="--n:6;--h:0.3333"></i></div>
-          <div class="barlab" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span></div>
-          <p class="fine" style="margin-top:6px">Month by month.</p>
+          <p class="gk" id="gk">If you introduce 1 new client on Growth every month</p>
+          <p class="gbig"><b id="gtot">A$13,643</b> in your first 12 months</p>
+          <div class="chart" aria-hidden="true">
+            <svg viewBox="0 0 120 100" preserveAspectRatio="none" focusable="false">
+              <defs><linearGradient id="gfill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E8C870" stop-opacity=".34"/><stop offset="1" stop-color="#E8C870" stop-opacity="0"/></linearGradient></defs>
+              <path class="gl" d="M2 8H118M2 53H118"/><path class="gb" d="M2 98H118"/>
+              <path class="ga" id="garea" d="M2.00 98.00 L11.67 94.90 L21.33 90.76 L31.00 85.59 L40.67 79.38 L50.33 72.14 L60.00 63.86 L69.67 54.55 L79.33 45.24 L89.00 35.93 L98.67 26.62 L108.33 17.31 L118.00 8.00 L118 98 L2 98 Z"/><path class="g1" id="gone" d="M2.00 98.00 L11.67 94.90 L21.33 93.86 L31.00 92.83 L40.67 91.79 L50.33 90.76 L60.00 89.72 L69.67 88.69 L79.33 88.69 L89.00 88.69 L98.67 88.69 L108.33 88.69 L118.00 88.69"/><path class="gm" id="gmany" d="M2.00 98.00 L11.67 94.90 L21.33 90.76 L31.00 85.59 L40.67 79.38 L50.33 72.14 L60.00 63.86 L69.67 54.55 L79.33 45.24 L89.00 35.93 L98.67 26.62 L108.33 17.31 L118.00 8.00"/>
+            </svg>
+            <span class="gdot"></span>
+          </div>
+          <div class="gx" aria-hidden="true"><span>Now</span><span>6 months</span><span>12 months</span></div>
+          <div class="legend"><span><i class="sw"></i><b>1 new client every month</b></span><span><i class="sw d"></i><b id="glo">Just 1 client: A$1,411</b></span></div>
+          <p class="fine" id="gnote">Assumes each client stays on their plan for 7 months.</p>
         </div>
         <div class="viz" id="vwl" hidden>
           <div class="splitbar" aria-hidden="true" style="--u:0.7083"><span class="us"></span><span class="kp"></span></div>
@@ -649,7 +672,9 @@ $$('.glow,.card,.tile').forEach(function(el){var tilt=el.hasAttribute('data-tilt
   el.addEventListener('pointerleave',function(){el.style.setProperty('--rx','0deg');el.style.setProperty('--ry','0deg')})});
 
 /* calculator */
-var mode='refer',pk='Growth',mk=20,shown=0,anim=0,tt=0,first=true,big=$('#big');
+var mode='refer',pk='Growth',mk=20,shown=0,anim=0,tt=0,first=true,big=$('#big'),gd='';
+var GNOTE_M="Assumes each client stays on their plan for 7 months.",GNOTE_O="Counts each first job only. Any more work they buy adds 5% on top.";
+function gpath(v,top){return 'M'+v.map(function(y,i){return (2+i/12*116).toFixed(2)+' '+(98-y/top*90).toFixed(2)}).join(' L')}
 function tween(to){clearTimeout(tt);cancelAnimationFrame(anim);if(reduce||first){first=false;big.textContent=money(to);shown=to;return}var from=shown,t0=0;
   function f(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/1000),e=1-Math.pow(1-k,4);big.textContent=money(k>=1?to:from+(to-from)*e);if(k<1)anim=requestAnimationFrame(f);else shown=to}
   anim=requestAnimationFrame(f);tt=setTimeout(function(){cancelAnimationFrame(anim);big.textContent=money(to);shown=to},1400)}
@@ -662,7 +687,11 @@ function calc(){var p=PACK[pk],mon=MONTHLY.indexOf(pk)>-1,unit=mon?' a month':''
   if(mode==='refer'){var e=p/1.1,a=e*.15,b=e*.05;
     if(mon){tween(a+6*b);$('#k').textContent='You earn over 7 months';$('#unit').textContent='';$('#say').textContent=money(a)+' first month, then '+money(b)+' a month for 6 months'}
     else{tween(a);$('#k').textContent='You earn on the first job';$('#unit').textContent='';$('#say').textContent='15% of this first job, then 5% of any more work for 6 months'}
-    $$('.bars i').forEach(function(i,n){var h=n===0?1:(mon?b/a:0);i.style.setProperty('--h',h);i.classList.toggle('zero',h===0)})}
+    var many=[0],one=[0],tm=0,to=0;for(var n=1;n<=12;n++){tm+=a+(mon?b*Math.min(n-1,6):0);to+=n===1?a:(mon&&n<=7?b:0);many.push(tm);one.push(to)}
+    var gm=gpath(many,tm);$('#gmany').setAttribute('d',gm);$('#garea').setAttribute('d',gm+' L118 98 L2 98 Z');$('#gone').setAttribute('d',gpath(one,tm));
+    $('#gk').textContent='If you introduce 1 new client on '+pk+' every month';$('#gtot').textContent=money(tm);$('#glo').textContent='Just 1 client: '+money(to);
+    $('#gnote').textContent=mon?GNOTE_M:GNOTE_O;
+    if(gd&&gd!==pk&&!reduce){var ch=$('.chart');ch.classList.add('redraw');void ch.offsetWidth;ch.classList.remove('redraw')}gd=pk}
   else{var pay=p*.85,cl=p*(1+mk/100),keep=cl-pay;
     tween(keep);$('#k').textContent='You keep';$('#unit').textContent=unit;
     $('#say').textContent='Your client pays you '+money(cl)+unit+'.';
